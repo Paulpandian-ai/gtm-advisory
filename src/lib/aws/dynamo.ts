@@ -124,7 +124,9 @@ export async function queryItems<T extends DynamoItem>(
       params.FilterExpression = options.filterExpression;
     if (options?.limit) params.Limit = options.limit;
 
-    const result = await docClient.send(new QueryCommand(params));
+    const result = await docClient.send(new QueryCommand(params), {
+      abortSignal: AbortSignal.timeout(5000),
+    });
     items.push(...((result.Items as T[]) ?? []));
     lastKey = result.LastEvaluatedKey;
 

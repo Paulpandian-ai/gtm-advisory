@@ -4,8 +4,15 @@ import { S3Client } from "@aws-sdk/client-s3";
 import { BedrockRuntimeClient } from "@aws-sdk/client-bedrock-runtime";
 
 const REGION = process.env.AWS_REGION || "us-east-1";
+const DYNAMODB_ENDPOINT = process.env.DYNAMODB_ENDPOINT;
 
-const dynamoClient = new DynamoDBClient({ region: REGION });
+const REQUEST_TIMEOUT_MS = 5_000;
+
+const dynamoClient = new DynamoDBClient({
+  region: REGION,
+  ...(DYNAMODB_ENDPOINT && { endpoint: DYNAMODB_ENDPOINT }),
+  maxAttempts: 2,
+});
 export const docClient = DynamoDBDocumentClient.from(dynamoClient, {
   marshallOptions: { removeUndefinedValues: true },
 });
