@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { MetricCard } from "@/components/ui/metric-card";
 import { HorizontalBarChart } from "@/components/ui/horizontal-bar-chart";
 import { InsightBox } from "@/components/ui/insight-box";
+import { STAGE_OPTIONS, stageLabel } from "@/components/benchmarks/stage-selector";
 
 interface BenchmarkMetric {
   metricName: string;
@@ -21,13 +22,12 @@ interface EcosystemTabProps {
   stage: string;
 }
 
-const stageOrder = ["Seed", "Series A", "Series B", "Series C", "Growth"];
 const stageColors: Record<string, string> = {
-  Seed: "#64748b",
-  "Series A": "#3b82f6",
-  "Series B": "#8b5cf6",
-  "Series C": "#22d3ee",
-  Growth: "#22c55e",
+  SEED: "#64748b",
+  SERIES_A: "#3b82f6",
+  SERIES_B: "#8b5cf6",
+  SERIES_C: "#22d3ee",
+  GROWTH: "#22c55e",
 };
 
 export function EcosystemTab({ metrics, stage }: EcosystemTabProps) {
@@ -42,15 +42,15 @@ export function EcosystemTab({ metrics, stage }: EcosystemTabProps) {
       const results: Record<string, BenchmarkMetric[]> = {};
 
       await Promise.all(
-        stageOrder.map(async (s) => {
+        STAGE_OPTIONS.map(async (s) => {
           try {
             const res = await fetch(
-              `/api/benchmarks?stage=${encodeURIComponent(s)}`
+              `/api/benchmarks?stage=${encodeURIComponent(s.value)}`
             );
             const data = await res.json();
-            results[s] = data.benchmarks ?? [];
+            results[s.value] = data.benchmarks ?? [];
           } catch {
-            results[s] = [];
+            results[s.value] = [];
           }
         })
       );
@@ -69,20 +69,20 @@ export function EcosystemTab({ metrics, stage }: EcosystemTabProps) {
   );
 
   // Build progression charts
-  const partnerRevProgression = stageOrder.map((s) => ({
-    label: s,
+  const partnerRevProgression = STAGE_OPTIONS.map((s) => ({
+    label: s.label,
     value:
-      (allStageData[s]?.find((m) => m.metricName === "partnerSourcedRevenuePct")
+      (allStageData[s.value]?.find((m) => m.metricName === "partnerSourcedRevenuePct")
         ?.p50 ?? 0) * 100,
-    color: stageColors[s],
+    color: stageColors[s.value],
   }));
 
-  const integrationProgression = stageOrder.map((s) => ({
-    label: s,
+  const integrationProgression = STAGE_OPTIONS.map((s) => ({
+    label: s.label,
     value:
-      allStageData[s]?.find((m) => m.metricName === "integrationCount")?.p50 ??
+      allStageData[s.value]?.find((m) => m.metricName === "integrationCount")?.p50 ??
       0,
-    color: stageColors[s],
+    color: stageColors[s.value],
   }));
 
   if (loading) {
@@ -93,11 +93,14 @@ export function EcosystemTab({ metrics, stage }: EcosystemTabProps) {
     );
   }
 
+  const seriesAPartnerRev = (allStageData["SERIES_A"]?.find((m) => m.metricName === "partnerSourcedRevenuePct")?.p50 ?? 0) * 100;
+  const seriesBPartnerRev = (allStageData["SERIES_B"]?.find((m) => m.metricName === "partnerSourcedRevenuePct")?.p50 ?? 0) * 100;
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-semibold text-[#f8fafc]">
-          Ecosystem & Partnerships — {stage}
+          Ecosystem & Partnerships — {stageLabel(stage)}
         </h3>
       </div>
 
@@ -159,7 +162,7 @@ export function EcosystemTab({ metrics, stage }: EcosystemTabProps) {
 
       <InsightBox
         title="Co-Sell Lift"
-        body={`Partner-sourced revenue jumps from ${(allStageData["Series A"]?.find((m) => m.metricName === "partnerSourcedRevenuePct")?.p50 ?? 0) * 100}% at Series A to ${(allStageData["Series B"]?.find((m) => m.metricName === "partnerSourcedRevenuePct")?.p50 ?? 0) * 100}% at Series B — a critical inflection point. Companies that invest in partner programs before Series B see 40% faster ecosystem growth.`}
+        body={`Partner-sourced revenue jumps from ${seriesAPartnerRev}% at Series A to ${seriesBPartnerRev}% at Series B — a critical inflection point. Companies that invest in partner programs before Series B see 40% faster ecosystem growth.`}
         variant="success"
         source="Cross-stage benchmark analysis"
       />

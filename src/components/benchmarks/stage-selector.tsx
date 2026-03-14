@@ -2,13 +2,20 @@
 
 import { cn } from "@/lib/utils";
 
-const stages = [
-  { label: "Seed", value: "Seed" },
-  { label: "Series A", value: "Series A" },
-  { label: "Series B", value: "Series B" },
-  { label: "Series C", value: "Series C" },
-  { label: "Growth", value: "Growth" },
+export const STAGE_OPTIONS = [
+  { label: "Seed", value: "SEED" },
+  { label: "Series A", value: "SERIES_A" },
+  { label: "Series B", value: "SERIES_B" },
+  { label: "Series C", value: "SERIES_C" },
+  { label: "D+ / Growth", value: "GROWTH" },
 ] as const;
+
+export type StageValue = (typeof STAGE_OPTIONS)[number]["value"];
+
+/** Map a stage value back to its display label */
+export function stageLabel(value: string): string {
+  return STAGE_OPTIONS.find((s) => s.value === value)?.label ?? value;
+}
 
 interface StageSelectorProps {
   selected: string;
@@ -18,7 +25,7 @@ interface StageSelectorProps {
 export function StageSelector({ selected, onSelect }: StageSelectorProps) {
   return (
     <div className="flex items-center gap-2 flex-wrap">
-      {stages.map((stage) => {
+      {STAGE_OPTIONS.map((stage) => {
         const isActive = selected === stage.value;
         return (
           <button

@@ -47,54 +47,54 @@ async function batchPut(table: string, items: Record<string, unknown>[]): Promis
 
 const stageBenchmarks = [
   // --- Seed Stage ---
-  { segType: "STAGE", segVal: "Seed", metric: "winRate", p25: 0.12, p50: 0.18, p75: 0.25, mean: 0.18, n: 82, unit: "ratio" },
-  { segType: "STAGE", segVal: "Seed", metric: "salesCycleLength", p25: 21, p50: 30, p75: 45, mean: 32, n: 82, unit: "days" },
-  { segType: "STAGE", segVal: "Seed", metric: "cac", p25: 8000, p50: 15000, p75: 25000, mean: 16000, n: 78, unit: "USD" },
-  { segType: "STAGE", segVal: "Seed", metric: "ltvCacRatio", p25: 1.5, p50: 2.5, p75: 4.0, mean: 2.7, n: 78, unit: "ratio" },
-  { segType: "STAGE", segVal: "Seed", metric: "nrr", p25: 0.90, p50: 1.00, p75: 1.10, mean: 1.00, n: 75, unit: "ratio" },
-  { segType: "STAGE", segVal: "Seed", metric: "churnRate", p25: 0.02, p50: 0.04, p75: 0.07, mean: 0.045, n: 75, unit: "ratio" },
-  { segType: "STAGE", segVal: "Seed", metric: "magicNumber", p25: 0.3, p50: 0.5, p75: 0.8, mean: 0.55, n: 60, unit: "ratio" },
-  { segType: "STAGE", segVal: "Seed", metric: "paybackMonths", p25: 18, p50: 24, p75: 36, mean: 26, n: 60, unit: "months" },
+  { segType: "STAGE", segVal: "SEED", metric: "winRate", p25: 0.12, p50: 0.18, p75: 0.25, mean: 0.18, n: 82, unit: "ratio" },
+  { segType: "STAGE", segVal: "SEED", metric: "salesCycleLength", p25: 21, p50: 30, p75: 45, mean: 32, n: 82, unit: "days" },
+  { segType: "STAGE", segVal: "SEED", metric: "cac", p25: 8000, p50: 15000, p75: 25000, mean: 16000, n: 78, unit: "USD" },
+  { segType: "STAGE", segVal: "SEED", metric: "ltvCacRatio", p25: 1.5, p50: 2.5, p75: 4.0, mean: 2.7, n: 78, unit: "ratio" },
+  { segType: "STAGE", segVal: "SEED", metric: "nrr", p25: 0.90, p50: 1.00, p75: 1.10, mean: 1.00, n: 75, unit: "ratio" },
+  { segType: "STAGE", segVal: "SEED", metric: "churnRate", p25: 0.02, p50: 0.04, p75: 0.07, mean: 0.045, n: 75, unit: "ratio" },
+  { segType: "STAGE", segVal: "SEED", metric: "magicNumber", p25: 0.3, p50: 0.5, p75: 0.8, mean: 0.55, n: 60, unit: "ratio" },
+  { segType: "STAGE", segVal: "SEED", metric: "paybackMonths", p25: 18, p50: 24, p75: 36, mean: 26, n: 60, unit: "months" },
 
   // --- Series A ---
-  { segType: "STAGE", segVal: "Series A", metric: "winRate", p25: 0.18, p50: 0.22, p75: 0.30, mean: 0.23, n: 145, unit: "ratio" },
-  { segType: "STAGE", segVal: "Series A", metric: "salesCycleLength", p25: 28, p50: 38, p75: 55, mean: 40, n: 145, unit: "days" },
-  { segType: "STAGE", segVal: "Series A", metric: "cac", p25: 12000, p50: 20000, p75: 35000, mean: 22000, n: 138, unit: "USD" },
-  { segType: "STAGE", segVal: "Series A", metric: "ltvCacRatio", p25: 2.0, p50: 3.0, p75: 5.0, mean: 3.3, n: 138, unit: "ratio" },
-  { segType: "STAGE", segVal: "Series A", metric: "nrr", p25: 0.95, p50: 1.05, p75: 1.15, mean: 1.05, n: 130, unit: "ratio" },
-  { segType: "STAGE", segVal: "Series A", metric: "churnRate", p25: 0.015, p50: 0.03, p75: 0.05, mean: 0.033, n: 130, unit: "ratio" },
-  { segType: "STAGE", segVal: "Series A", metric: "magicNumber", p25: 0.5, p50: 0.7, p75: 1.0, mean: 0.73, n: 110, unit: "ratio" },
-  { segType: "STAGE", segVal: "Series A", metric: "paybackMonths", p25: 14, p50: 20, p75: 28, mean: 21, n: 110, unit: "months" },
+  { segType: "STAGE", segVal: "SERIES_A", metric: "winRate", p25: 0.18, p50: 0.22, p75: 0.30, mean: 0.23, n: 145, unit: "ratio" },
+  { segType: "STAGE", segVal: "SERIES_A", metric: "salesCycleLength", p25: 28, p50: 38, p75: 55, mean: 40, n: 145, unit: "days" },
+  { segType: "STAGE", segVal: "SERIES_A", metric: "cac", p25: 12000, p50: 20000, p75: 35000, mean: 22000, n: 138, unit: "USD" },
+  { segType: "STAGE", segVal: "SERIES_A", metric: "ltvCacRatio", p25: 2.0, p50: 3.0, p75: 5.0, mean: 3.3, n: 138, unit: "ratio" },
+  { segType: "STAGE", segVal: "SERIES_A", metric: "nrr", p25: 0.95, p50: 1.05, p75: 1.15, mean: 1.05, n: 130, unit: "ratio" },
+  { segType: "STAGE", segVal: "SERIES_A", metric: "churnRate", p25: 0.015, p50: 0.03, p75: 0.05, mean: 0.033, n: 130, unit: "ratio" },
+  { segType: "STAGE", segVal: "SERIES_A", metric: "magicNumber", p25: 0.5, p50: 0.7, p75: 1.0, mean: 0.73, n: 110, unit: "ratio" },
+  { segType: "STAGE", segVal: "SERIES_A", metric: "paybackMonths", p25: 14, p50: 20, p75: 28, mean: 21, n: 110, unit: "months" },
 
   // --- Series B ---
-  { segType: "STAGE", segVal: "Series B", metric: "winRate", p25: 0.20, p50: 0.26, p75: 0.35, mean: 0.27, n: 120, unit: "ratio" },
-  { segType: "STAGE", segVal: "Series B", metric: "salesCycleLength", p25: 35, p50: 48, p75: 72, mean: 52, n: 120, unit: "days" },
-  { segType: "STAGE", segVal: "Series B", metric: "cac", p25: 18000, p50: 30000, p75: 50000, mean: 33000, n: 115, unit: "USD" },
-  { segType: "STAGE", segVal: "Series B", metric: "ltvCacRatio", p25: 2.5, p50: 3.5, p75: 6.0, mean: 4.0, n: 115, unit: "ratio" },
-  { segType: "STAGE", segVal: "Series B", metric: "nrr", p25: 1.00, p50: 1.10, p75: 1.20, mean: 1.10, n: 112, unit: "ratio" },
-  { segType: "STAGE", segVal: "Series B", metric: "churnRate", p25: 0.01, p50: 0.025, p75: 0.04, mean: 0.025, n: 112, unit: "ratio" },
-  { segType: "STAGE", segVal: "Series B", metric: "magicNumber", p25: 0.6, p50: 0.8, p75: 1.2, mean: 0.87, n: 100, unit: "ratio" },
-  { segType: "STAGE", segVal: "Series B", metric: "paybackMonths", p25: 12, p50: 18, p75: 24, mean: 18, n: 100, unit: "months" },
+  { segType: "STAGE", segVal: "SERIES_B", metric: "winRate", p25: 0.20, p50: 0.26, p75: 0.35, mean: 0.27, n: 120, unit: "ratio" },
+  { segType: "STAGE", segVal: "SERIES_B", metric: "salesCycleLength", p25: 35, p50: 48, p75: 72, mean: 52, n: 120, unit: "days" },
+  { segType: "STAGE", segVal: "SERIES_B", metric: "cac", p25: 18000, p50: 30000, p75: 50000, mean: 33000, n: 115, unit: "USD" },
+  { segType: "STAGE", segVal: "SERIES_B", metric: "ltvCacRatio", p25: 2.5, p50: 3.5, p75: 6.0, mean: 4.0, n: 115, unit: "ratio" },
+  { segType: "STAGE", segVal: "SERIES_B", metric: "nrr", p25: 1.00, p50: 1.10, p75: 1.20, mean: 1.10, n: 112, unit: "ratio" },
+  { segType: "STAGE", segVal: "SERIES_B", metric: "churnRate", p25: 0.01, p50: 0.025, p75: 0.04, mean: 0.025, n: 112, unit: "ratio" },
+  { segType: "STAGE", segVal: "SERIES_B", metric: "magicNumber", p25: 0.6, p50: 0.8, p75: 1.2, mean: 0.87, n: 100, unit: "ratio" },
+  { segType: "STAGE", segVal: "SERIES_B", metric: "paybackMonths", p25: 12, p50: 18, p75: 24, mean: 18, n: 100, unit: "months" },
 
   // --- Series C ---
-  { segType: "STAGE", segVal: "Series C", metric: "winRate", p25: 0.22, p50: 0.28, p75: 0.38, mean: 0.29, n: 90, unit: "ratio" },
-  { segType: "STAGE", segVal: "Series C", metric: "salesCycleLength", p25: 45, p50: 65, p75: 90, mean: 67, n: 90, unit: "days" },
-  { segType: "STAGE", segVal: "Series C", metric: "cac", p25: 25000, p50: 42000, p75: 70000, mean: 46000, n: 88, unit: "USD" },
-  { segType: "STAGE", segVal: "Series C", metric: "ltvCacRatio", p25: 3.0, p50: 4.0, p75: 7.0, mean: 4.7, n: 88, unit: "ratio" },
-  { segType: "STAGE", segVal: "Series C", metric: "nrr", p25: 1.05, p50: 1.15, p75: 1.25, mean: 1.15, n: 85, unit: "ratio" },
-  { segType: "STAGE", segVal: "Series C", metric: "churnRate", p25: 0.008, p50: 0.02, p75: 0.035, mean: 0.021, n: 85, unit: "ratio" },
-  { segType: "STAGE", segVal: "Series C", metric: "magicNumber", p25: 0.7, p50: 0.9, p75: 1.3, mean: 0.97, n: 75, unit: "ratio" },
-  { segType: "STAGE", segVal: "Series C", metric: "paybackMonths", p25: 10, p50: 15, p75: 22, mean: 16, n: 75, unit: "months" },
+  { segType: "STAGE", segVal: "SERIES_C", metric: "winRate", p25: 0.22, p50: 0.28, p75: 0.38, mean: 0.29, n: 90, unit: "ratio" },
+  { segType: "STAGE", segVal: "SERIES_C", metric: "salesCycleLength", p25: 45, p50: 65, p75: 90, mean: 67, n: 90, unit: "days" },
+  { segType: "STAGE", segVal: "SERIES_C", metric: "cac", p25: 25000, p50: 42000, p75: 70000, mean: 46000, n: 88, unit: "USD" },
+  { segType: "STAGE", segVal: "SERIES_C", metric: "ltvCacRatio", p25: 3.0, p50: 4.0, p75: 7.0, mean: 4.7, n: 88, unit: "ratio" },
+  { segType: "STAGE", segVal: "SERIES_C", metric: "nrr", p25: 1.05, p50: 1.15, p75: 1.25, mean: 1.15, n: 85, unit: "ratio" },
+  { segType: "STAGE", segVal: "SERIES_C", metric: "churnRate", p25: 0.008, p50: 0.02, p75: 0.035, mean: 0.021, n: 85, unit: "ratio" },
+  { segType: "STAGE", segVal: "SERIES_C", metric: "magicNumber", p25: 0.7, p50: 0.9, p75: 1.3, mean: 0.97, n: 75, unit: "ratio" },
+  { segType: "STAGE", segVal: "SERIES_C", metric: "paybackMonths", p25: 10, p50: 15, p75: 22, mean: 16, n: 75, unit: "months" },
 
   // --- Growth (Series D+) ---
-  { segType: "STAGE", segVal: "Growth", metric: "winRate", p25: 0.25, p50: 0.32, p75: 0.42, mean: 0.33, n: 65, unit: "ratio" },
-  { segType: "STAGE", segVal: "Growth", metric: "salesCycleLength", p25: 55, p50: 78, p75: 110, mean: 81, n: 65, unit: "days" },
-  { segType: "STAGE", segVal: "Growth", metric: "cac", p25: 35000, p50: 55000, p75: 90000, mean: 60000, n: 62, unit: "USD" },
-  { segType: "STAGE", segVal: "Growth", metric: "ltvCacRatio", p25: 3.5, p50: 5.0, p75: 8.0, mean: 5.5, n: 62, unit: "ratio" },
-  { segType: "STAGE", segVal: "Growth", metric: "nrr", p25: 1.10, p50: 1.20, p75: 1.30, mean: 1.20, n: 60, unit: "ratio" },
-  { segType: "STAGE", segVal: "Growth", metric: "churnRate", p25: 0.005, p50: 0.015, p75: 0.025, mean: 0.015, n: 60, unit: "ratio" },
-  { segType: "STAGE", segVal: "Growth", metric: "magicNumber", p25: 0.8, p50: 1.0, p75: 1.4, mean: 1.07, n: 50, unit: "ratio" },
-  { segType: "STAGE", segVal: "Growth", metric: "paybackMonths", p25: 8, p50: 12, p75: 18, mean: 13, n: 50, unit: "months" },
+  { segType: "STAGE", segVal: "GROWTH", metric: "winRate", p25: 0.25, p50: 0.32, p75: 0.42, mean: 0.33, n: 65, unit: "ratio" },
+  { segType: "STAGE", segVal: "GROWTH", metric: "salesCycleLength", p25: 55, p50: 78, p75: 110, mean: 81, n: 65, unit: "days" },
+  { segType: "STAGE", segVal: "GROWTH", metric: "cac", p25: 35000, p50: 55000, p75: 90000, mean: 60000, n: 62, unit: "USD" },
+  { segType: "STAGE", segVal: "GROWTH", metric: "ltvCacRatio", p25: 3.5, p50: 5.0, p75: 8.0, mean: 5.5, n: 62, unit: "ratio" },
+  { segType: "STAGE", segVal: "GROWTH", metric: "nrr", p25: 1.10, p50: 1.20, p75: 1.30, mean: 1.20, n: 60, unit: "ratio" },
+  { segType: "STAGE", segVal: "GROWTH", metric: "churnRate", p25: 0.005, p50: 0.015, p75: 0.025, mean: 0.015, n: 60, unit: "ratio" },
+  { segType: "STAGE", segVal: "GROWTH", metric: "magicNumber", p25: 0.8, p50: 1.0, p75: 1.4, mean: 1.07, n: 50, unit: "ratio" },
+  { segType: "STAGE", segVal: "GROWTH", metric: "paybackMonths", p25: 8, p50: 12, p75: 18, mean: 13, n: 50, unit: "months" },
 ];
 
 // ============================================================
@@ -224,11 +224,11 @@ const pricingBenchmarks = [
   { segType: "GTM_MOTION", segVal: "Hybrid", metric: "discountRate", p25: 0.08, p50: 0.14, p75: 0.22, mean: 0.15, n: 95, unit: "ratio" },
 
   // Pricing model distribution by stage
-  { segType: "STAGE", segVal: "Seed", metric: "avgContractValue", p25: 2000, p50: 5000, p75: 12000, mean: 6500, n: 80, unit: "USD" },
-  { segType: "STAGE", segVal: "Series A", metric: "avgContractValue", p25: 5000, p50: 15000, p75: 35000, mean: 18000, n: 140, unit: "USD" },
-  { segType: "STAGE", segVal: "Series B", metric: "avgContractValue", p25: 12000, p50: 30000, p75: 65000, mean: 36000, n: 115, unit: "USD" },
-  { segType: "STAGE", segVal: "Series C", metric: "avgContractValue", p25: 25000, p50: 55000, p75: 110000, mean: 63000, n: 85, unit: "USD" },
-  { segType: "STAGE", segVal: "Growth", metric: "avgContractValue", p25: 40000, p50: 85000, p75: 180000, mean: 102000, n: 60, unit: "USD" },
+  { segType: "STAGE", segVal: "SEED", metric: "avgContractValue", p25: 2000, p50: 5000, p75: 12000, mean: 6500, n: 80, unit: "USD" },
+  { segType: "STAGE", segVal: "SERIES_A", metric: "avgContractValue", p25: 5000, p50: 15000, p75: 35000, mean: 18000, n: 140, unit: "USD" },
+  { segType: "STAGE", segVal: "SERIES_B", metric: "avgContractValue", p25: 12000, p50: 30000, p75: 65000, mean: 36000, n: 115, unit: "USD" },
+  { segType: "STAGE", segVal: "SERIES_C", metric: "avgContractValue", p25: 25000, p50: 55000, p75: 110000, mean: 63000, n: 85, unit: "USD" },
+  { segType: "STAGE", segVal: "GROWTH", metric: "avgContractValue", p25: 40000, p50: 85000, p75: 180000, mean: 102000, n: 60, unit: "USD" },
 ];
 
 // ============================================================
@@ -236,17 +236,17 @@ const pricingBenchmarks = [
 // ============================================================
 
 const ecosystemBenchmarks = [
-  { segType: "STAGE", segVal: "Seed", metric: "partnerSourcedRevenuePct", p25: 0.0, p50: 0.02, p75: 0.08, mean: 0.03, n: 60, unit: "ratio" },
-  { segType: "STAGE", segVal: "Series A", metric: "partnerSourcedRevenuePct", p25: 0.03, p50: 0.08, p75: 0.15, mean: 0.09, n: 100, unit: "ratio" },
-  { segType: "STAGE", segVal: "Series B", metric: "partnerSourcedRevenuePct", p25: 0.08, p50: 0.15, p75: 0.25, mean: 0.16, n: 90, unit: "ratio" },
-  { segType: "STAGE", segVal: "Series C", metric: "partnerSourcedRevenuePct", p25: 0.12, p50: 0.22, p75: 0.35, mean: 0.23, n: 70, unit: "ratio" },
-  { segType: "STAGE", segVal: "Growth", metric: "partnerSourcedRevenuePct", p25: 0.18, p50: 0.30, p75: 0.45, mean: 0.31, n: 50, unit: "ratio" },
+  { segType: "STAGE", segVal: "SEED", metric: "partnerSourcedRevenuePct", p25: 0.0, p50: 0.02, p75: 0.08, mean: 0.03, n: 60, unit: "ratio" },
+  { segType: "STAGE", segVal: "SERIES_A", metric: "partnerSourcedRevenuePct", p25: 0.03, p50: 0.08, p75: 0.15, mean: 0.09, n: 100, unit: "ratio" },
+  { segType: "STAGE", segVal: "SERIES_B", metric: "partnerSourcedRevenuePct", p25: 0.08, p50: 0.15, p75: 0.25, mean: 0.16, n: 90, unit: "ratio" },
+  { segType: "STAGE", segVal: "SERIES_C", metric: "partnerSourcedRevenuePct", p25: 0.12, p50: 0.22, p75: 0.35, mean: 0.23, n: 70, unit: "ratio" },
+  { segType: "STAGE", segVal: "GROWTH", metric: "partnerSourcedRevenuePct", p25: 0.18, p50: 0.30, p75: 0.45, mean: 0.31, n: 50, unit: "ratio" },
 
-  { segType: "STAGE", segVal: "Seed", metric: "integrationCount", p25: 2, p50: 5, p75: 10, mean: 6, n: 60, unit: "count" },
-  { segType: "STAGE", segVal: "Series A", metric: "integrationCount", p25: 8, p50: 15, p75: 30, mean: 18, n: 100, unit: "count" },
-  { segType: "STAGE", segVal: "Series B", metric: "integrationCount", p25: 20, p50: 40, p75: 70, mean: 43, n: 90, unit: "count" },
-  { segType: "STAGE", segVal: "Series C", metric: "integrationCount", p25: 40, p50: 75, p75: 120, mean: 78, n: 70, unit: "count" },
-  { segType: "STAGE", segVal: "Growth", metric: "integrationCount", p25: 80, p50: 150, p75: 250, mean: 160, n: 50, unit: "count" },
+  { segType: "STAGE", segVal: "SEED", metric: "integrationCount", p25: 2, p50: 5, p75: 10, mean: 6, n: 60, unit: "count" },
+  { segType: "STAGE", segVal: "SERIES_A", metric: "integrationCount", p25: 8, p50: 15, p75: 30, mean: 18, n: 100, unit: "count" },
+  { segType: "STAGE", segVal: "SERIES_B", metric: "integrationCount", p25: 20, p50: 40, p75: 70, mean: 43, n: 90, unit: "count" },
+  { segType: "STAGE", segVal: "SERIES_C", metric: "integrationCount", p25: 40, p50: 75, p75: 120, mean: 78, n: 70, unit: "count" },
+  { segType: "STAGE", segVal: "GROWTH", metric: "integrationCount", p25: 80, p50: 150, p75: 250, mean: 160, n: 50, unit: "count" },
 ];
 
 // ============================================================

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { queryItems } from "@/lib/aws/dynamo";
+import { queryByPK, queryItems } from "@/lib/aws/dynamo";
 import { TABLES } from "@/lib/aws/config";
 import type { BenchmarkItem } from "@/lib/aws/types";
 
@@ -10,24 +10,24 @@ export async function GET(request: NextRequest) {
   const segmentValue = searchParams.get("segmentValue");
 
   try {
-    // Query by specific segment
+    // Query by specific segment (type + value)
     if (segmentType && segmentValue) {
       const pk = `BENCH#${segmentType}#${segmentValue}`;
-      const items = await queryItems<BenchmarkItem>(
+      const items = await queryByPK<BenchmarkItem>(
         TABLES.BENCHMARKS,
-        "pk = :pk",
-        { ":pk": pk }
+        pk,
+        "METRIC#"
       );
       return NextResponse.json({ benchmarks: items });
     }
 
-    // Query by stage (shorthand)
+    // Query by stage (shorthand for segmentType=STAGE)
     if (stage) {
       const pk = `BENCH#STAGE#${stage}`;
-      const items = await queryItems<BenchmarkItem>(
+      const items = await queryByPK<BenchmarkItem>(
         TABLES.BENCHMARKS,
-        "pk = :pk",
-        { ":pk": pk }
+        pk,
+        "METRIC#"
       );
       return NextResponse.json({ benchmarks: items });
     }

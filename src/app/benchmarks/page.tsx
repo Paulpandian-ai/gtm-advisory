@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { StageSelector } from "@/components/benchmarks/stage-selector";
+import { StageSelector, stageLabel } from "@/components/benchmarks/stage-selector";
 import { RevenueTab } from "@/components/benchmarks/revenue-tab";
 import { GTMMotionTab } from "@/components/benchmarks/gtm-motion-tab";
 import { EcosystemTab } from "@/components/benchmarks/ecosystem-tab";
 import { PricingTab } from "@/components/benchmarks/pricing-tab";
 import { YourScoreTab } from "@/components/benchmarks/your-score-tab";
 import { cn } from "@/lib/utils";
+import { BarChart3 } from "lucide-react";
 
 interface BenchmarkMetric {
   metricName: string;
@@ -30,27 +31,33 @@ const tabs = [
 type TabId = (typeof tabs)[number]["id"];
 
 export default function BenchmarksPage() {
-  const [stage, setStage] = useState("Series A");
+  const [stage, setStage] = useState("SERIES_A");
   const [activeTab, setActiveTab] = useState<TabId>("revenue");
   const [metrics, setMetrics] = useState<BenchmarkMetric[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     async function fetchBenchmarks() {
       setLoading(true);
+      setError(false);
       try {
-        const res = await fetch(
-          `/api/benchmarks?stage=${encodeURIComponent(stage)}`
-        );
+        const res = await fetch(`/api/benchmarks?stage=${encodeURIComponent(stage)}`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
         setMetrics(data.benchmarks ?? []);
-      } catch {
+      } catch (err) {
+        console.error("Failed to fetch benchmarks:", err);
         setMetrics([]);
+        setError(true);
       }
       setLoading(false);
     }
     fetchBenchmarks();
   }, [stage]);
+
+  const displayStage = stageLabel(stage);
+  const hasData = metrics.length > 0;
 
   return (
     <div className="space-y-6">
@@ -89,24 +96,36 @@ export default function BenchmarksPage() {
       {loading ? (
         <div className="flex items-center justify-center py-20 text-[#64748b]">
           <div className="flex items-center gap-3">
-            <div className="w-2 h-2 rounded-full bg-[#3b82f6] animate-pulse-blue" />
+            <div className="w-2 h-2 rounded-full bg-[#3b82f6] animate-pulse" />
             Loading benchmarks...
           </div>
+        </div>
+      ) : !hasData ? (
+        <div className="bg-[#0f172a] border border-[#1e293b] rounded-lg p-12 text-center">
+          <BarChart3 className="w-10 h-10 text-[#64748b] mx-auto mb-4" />
+          <h3 className="text-lg font-medium text-[#94a3b8] mb-2">
+            {error ? "Failed to load benchmarks" : "No benchmark data"}
+          </h3>
+          <p className="text-sm text-[#64748b] max-w-md mx-auto">
+            {error
+              ? "Could not connect to the benchmark API. Check your DynamoDB configuration and try again."
+              : `No benchmark data found for ${displayStage}. Run the seed script to populate data.`}
+          </p>
         </div>
       ) : (
         <div>
           {activeTab === "revenue" && (
-            <RevenueTab metrics={metrics} stage={stage} />
+            <RevenueTab metrics={metrics} stage={displayStage} />
           )}
           {activeTab === "gtm-motion" && <GTMMotionTab stage={stage} />}
           {activeTab === "ecosystem" && (
             <EcosystemTab metrics={metrics} stage={stage} />
           )}
           {activeTab === "pricing" && (
-            <PricingTab metrics={metrics} stage={stage} />
+            <PricingTab metrics={metrics} stage={displayStage} />
           )}
           {activeTab === "your-score" && (
-            <YourScoreTab metrics={metrics} stage={stage} />
+            <YourScoreTab metrics={metrics} stage={displayStage} />
           )}
         </div>
       )}
