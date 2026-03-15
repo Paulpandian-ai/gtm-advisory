@@ -113,7 +113,7 @@ echo "════════════════════════�
 echo "  Configure these in Amplify Console:"
 echo "═══════════════════════════════════════════"
 echo ""
-echo "  AWS_REGION=$REGION"
+echo "  APP_REGION=$REGION"
 echo "  DYNAMODB_COMPANIES_TABLE=horizon-companies"
 echo "  DYNAMODB_BENCHMARKS_TABLE=horizon-benchmarks"
 echo "  DYNAMODB_SOURCES_TABLE=horizon-sources"
