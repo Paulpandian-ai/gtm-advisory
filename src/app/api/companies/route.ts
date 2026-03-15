@@ -6,6 +6,7 @@ import {
   putItem,
 } from "@/lib/aws/dynamo";
 import { TABLES } from "@/lib/aws/config";
+import { z } from "zod/v4";
 import type {
   CompanyProfile,
   RevenueMetrics,
@@ -16,6 +17,32 @@ import type {
   TechStackItem,
   DynamoItem,
 } from "@/lib/aws/types";
+
+/* ── Zod schemas ───────────────────────────────────────── */
+
+const ProfileSchema = z.object({
+  name: z.string().min(1),
+  industry: z.string().min(1),
+  stage: z.string().min(1),
+  arr: z.number().optional(),
+  growth: z.number().optional(),
+  employees: z.number().optional(),
+  founded: z.number().optional(),
+  hqLocation: z.string().optional(),
+  gtmMotion: z.string().optional(),
+  description: z.string().optional(),
+  website: z.string().optional(),
+});
+
+const CreateCompanySchema = z.object({
+  profile: ProfileSchema,
+  revenue: z.record(z.string(), z.unknown()).optional(),
+  sales: z.record(z.string(), z.unknown()).optional(),
+  channel: z.record(z.string(), z.unknown()).optional(),
+  ecosystem: z.record(z.string(), z.unknown()).optional(),
+  pricing: z.record(z.string(), z.unknown()).optional(),
+  techstack: z.record(z.string(), z.unknown()).optional(),
+});
 
 /**
  * GET /api/companies — query horizon-companies table.
@@ -121,15 +148,17 @@ function arrRange(arr: number): string {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { profile, revenue, sales, channel, ecosystem, pricing, techstack } =
-      body;
+    const parsed = CreateCompanySchema.safeParse(body);
 
-    if (!profile?.name || !profile?.industry || !profile?.stage) {
+    if (!parsed.success) {
       return NextResponse.json(
-        { error: "profile.name, profile.industry, and profile.stage are required" },
+        { error: "Validation failed", details: parsed.error.issues },
         { status: 400 }
       );
     }
+
+    const { profile, revenue, sales, channel, ecosystem, pricing, techstack } =
+      parsed.data as Record<string, any>;
 
     const id = crypto.randomUUID();
     const now = new Date().toISOString();

@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "eslint",
     "setup:aws": "tsx scripts/setup-aws.ts",
-    "seed:aws": "tsx scripts/seed-aws.ts"
+    "seed:aws": "tsx scripts/seed-aws.ts",
+    "seed": "tsx scripts/seed-aws.ts",
+    "recalculate": "tsx scripts/recalculate-benchmarks.ts"
   },
   "dependencies": {
     "@aws-sdk/client-bedrock-runtime": "^3.1009.0",

@@ -79,6 +79,70 @@ interface CompanyData {
   } | null;
 }
 
+interface GTMScore {
+  totalScore: number;
+  breakdown: {
+    growthEfficiency: number;
+    salesEfficiency: number;
+    retentionHealth: number;
+    channelDiversity: number;
+    ecosystemLeverage: number;
+  };
+  percentile: number;
+  grade: string;
+}
+
+/* ── Circular Gauge ────────────────────────────────────── */
+
+function ScoreGauge({ score, grade }: { score: number; grade: string }) {
+  const radius = 52;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (score / 100) * circumference;
+  const color =
+    score >= 70 ? "#22c55e" : score >= 40 ? "#f59e0b" : "#ef4444";
+
+  return (
+    <div className="relative w-[140px] h-[140px] flex-shrink-0">
+      <svg
+        viewBox="0 0 120 120"
+        className="w-full h-full -rotate-90"
+      >
+        <circle
+          cx="60"
+          cy="60"
+          r={radius}
+          fill="none"
+          stroke="#1e293b"
+          strokeWidth="8"
+        />
+        <circle
+          cx="60"
+          cy="60"
+          r={radius}
+          fill="none"
+          stroke={color}
+          strokeWidth="8"
+          strokeLinecap="round"
+          strokeDasharray={circumference}
+          strokeDashoffset={offset}
+          className="transition-all duration-1000 ease-out"
+        />
+      </svg>
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <span
+          className="text-3xl font-mono font-bold"
+          style={{ color }}
+        >
+          {score}
+        </span>
+        <span className="text-xs text-[#94a3b8] -mt-0.5">
+          {grade}
+        </span>
+      </div>
+    </div>
+  );
+}
+
 /* ── Constants ─────────────────────────────────────────── */
 
 const TABS = ["Overview", "GTM Analysis", "Ecosystem", "Comparison"] as const;
@@ -111,17 +175,22 @@ export default function CompanyDetailPage({
   const { id } = use(params);
   const router = useRouter();
   const [data, setData] = useState<CompanyData | null>(null);
+  const [gtmScore, setGtmScore] = useState<GTMScore | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<Tab>("Overview");
 
   useEffect(() => {
     async function fetchData() {
       try {
-        // Fetch profile and related data
-        const res = await fetch(`/api/companies/${id}`);
-        if (res.ok) {
-          const json = await res.json();
-          setData(json);
+        const [companyRes, scoreRes] = await Promise.allSettled([
+          fetch(`/api/companies/${id}`),
+          fetch(`/api/companies/${id}/score`),
+        ]);
+        if (companyRes.status === "fulfilled" && companyRes.value.ok) {
+          setData(await companyRes.value.json());
+        }
+        if (scoreRes.status === "fulfilled" && scoreRes.value.ok) {
+          setGtmScore(await scoreRes.value.json());
         }
       } catch {
         // no-op
@@ -204,7 +273,7 @@ export default function CompanyDetailPage({
       {/* Header */}
       <div className="bg-[#0f172a] border border-[#1e293b] rounded-lg p-6">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
+          <div className="flex-1">
             <div className="flex items-center gap-3 mb-2">
               <h2 className="text-2xl font-semibold text-[#f8fafc]">
                 {p.name}
@@ -229,6 +298,22 @@ export default function CompanyDetailPage({
               <p className="text-sm text-[#64748b]">{p.description}</p>
             )}
           </div>
+
+          {/* GTM Score Gauge */}
+          {gtmScore && (
+            <div className="flex flex-col items-center gap-1">
+              <span className="text-[10px] text-[#64748b] uppercase tracking-wider">
+                GTM Score
+              </span>
+              <ScoreGauge
+                score={gtmScore.totalScore}
+                grade={gtmScore.grade}
+              />
+              <span className="text-[10px] text-[#64748b]">
+                P{gtmScore.percentile} vs {p.stage}
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Key metrics row */}
