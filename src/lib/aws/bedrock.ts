@@ -17,8 +17,8 @@ export type { BedrockUsage };
 // ============================================================
 
 export const MODELS = {
-  SONNET: "anthropic.claude-sonnet-4-20250514-v1:0",
-  OPUS: "anthropic.claude-opus-4-20250514-v1:0",
+  SONNET: "us.anthropic.claude-sonnet-4-20250514-v1:0",
+  OPUS: "us.anthropic.claude-opus-4-20250514-v1:0",
 } as const;
 
 type ModelId = (typeof MODELS)[keyof typeof MODELS];
