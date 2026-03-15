@@ -4,6 +4,15 @@ import { TABLES } from "@/lib/aws/config";
 import { queryFallback, queryFallbackBySegmentType } from "@/lib/aws/fallback-benchmarks";
 import type { BenchmarkItem } from "@/lib/aws/types";
 
+/** Map frontend stage keys to the exact DynamoDB pk values. */
+const STAGE_MAP: Record<string, string> = {
+  SEED: "Seed",
+  SERIES_A: "Series A",
+  SERIES_B: "Series B",
+  SERIES_C: "Series C",
+  GROWTH: "Growth",
+};
+
 /**
  * Try DynamoDB first. On any failure (network, auth, timeout), fall back to
  * in-memory benchmark data so the UI always has data to render.
@@ -42,7 +51,8 @@ export async function GET(request: NextRequest) {
 
   // Query by stage (shorthand for segmentType=STAGE)
   if (stage) {
-    const pk = `BENCH#STAGE#${stage}`;
+    const mapped = STAGE_MAP[stage] ?? stage;
+    const pk = `BENCH#STAGE#${mapped}`;
     const { items, source } = await tryDynamo(
       () => queryByPK<BenchmarkItem>(TABLES.BENCHMARKS, pk, "METRIC#"),
       () => queryFallback(pk, "METRIC#") as unknown as BenchmarkItem[]
