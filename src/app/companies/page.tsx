@@ -29,6 +29,7 @@ import {
   TrendingDown,
   Loader2,
 } from "lucide-react";
+import { CompanyCardSkeleton } from "@/components/ui/skeletons";
 
 /* ── Constants ─────────────────────────────────────────── */
 
@@ -365,18 +366,31 @@ export default function CompaniesPage() {
 
       {/* Results grid */}
       {loading ? (
-        <div className="flex items-center justify-center py-20">
-          <Loader2 className="w-6 h-6 animate-spin text-[#3b82f6]" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <CompanyCardSkeleton key={i} />
+          ))}
         </div>
       ) : filtered.length === 0 ? (
         <div className="bg-[#0f172a] border border-[#1e293b] rounded-lg p-12 text-center">
           <Building2 className="w-10 h-10 text-[#64748b] mx-auto mb-4" />
           <h3 className="text-lg font-medium text-[#94a3b8] mb-2">
-            No companies found
+            {companies.length === 0 ? "Add your first company" : "No companies found"}
           </h3>
-          <p className="text-sm text-[#64748b] max-w-md mx-auto">
-            Add companies via the Data Curation page or adjust your filters.
+          <p className="text-sm text-[#64748b] max-w-md mx-auto mb-4">
+            {companies.length === 0
+              ? "Get started by adding company data through the Data Curation page or AI Report Parser."
+              : "Try adjusting your filters or search query."}
           </p>
+          {companies.length === 0 && (
+            <button
+              onClick={() => router.push("/curation")}
+              className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#3b82f6] text-white text-sm font-medium rounded-lg hover:bg-[#2563eb] transition-colors"
+            >
+              <Plus className="w-4 h-4" />
+              Add Company
+            </button>
+          )}
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

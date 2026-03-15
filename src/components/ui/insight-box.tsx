@@ -1,7 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { Info, AlertTriangle, CheckCircle } from "lucide-react";
+import { Info, AlertTriangle, CheckCircle, Copy, Check } from "lucide-react";
 
 interface InsightBoxProps {
   title: string;
@@ -42,18 +43,25 @@ export function InsightBox({
 }: InsightBoxProps) {
   const v = variants[variant];
   const Icon = v.icon;
+  const [copied, setCopied] = useState(false);
+
+  function handleCopy() {
+    navigator.clipboard.writeText(`${title}: ${body}`);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }
 
   return (
     <div
       className={cn(
-        "rounded-xl border p-5",
+        "rounded-xl border p-5 group relative",
         v.border,
         v.bg
       )}
     >
       <div className="flex items-start gap-3">
         <Icon className={cn("w-5 h-5 mt-0.5 flex-shrink-0", v.iconColor)} />
-        <div className="min-w-0">
+        <div className="min-w-0 flex-1">
           <h4 className={cn("text-sm font-semibold mb-1", v.titleColor)}>
             {title}
           </h4>
@@ -64,6 +72,17 @@ export function InsightBox({
             </p>
           )}
         </div>
+        <button
+          onClick={handleCopy}
+          className="opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded hover:bg-[#1e293b]"
+          title="Copy insight"
+        >
+          {copied ? (
+            <Check className="w-3.5 h-3.5 text-[#22c55e]" />
+          ) : (
+            <Copy className="w-3.5 h-3.5 text-[#64748b]" />
+          )}
+        </button>
       </div>
     </div>
   );

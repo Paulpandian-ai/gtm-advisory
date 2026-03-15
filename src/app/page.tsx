@@ -19,6 +19,7 @@ import {
   RefreshCcw,
 } from "lucide-react";
 import { InsightBox } from "@/components/ui/insight-box";
+import { StatCardSkeleton, ChartSkeleton } from "@/components/ui/skeletons";
 import {
   BarChart,
   Bar,
@@ -155,8 +156,20 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-32">
-        <Loader2 className="w-8 h-8 animate-spin text-[#3b82f6]" />
+      <div className="space-y-8">
+        <div>
+          <div className="h-7 w-32 bg-[#1e293b] rounded animate-pulse" />
+          <div className="h-4 w-56 bg-[#1e293b] rounded animate-pulse mt-2" />
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <StatCardSkeleton key={i} />
+          ))}
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <ChartSkeleton />
+          <ChartSkeleton />
+        </div>
       </div>
     );
   }
