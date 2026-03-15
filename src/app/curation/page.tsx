@@ -6,9 +6,11 @@ import { SourcesDashboard } from "@/components/curation/sources-dashboard";
 import { ManualEntry } from "@/components/curation/manual-entry";
 import { BulkImport } from "@/components/curation/bulk-import";
 import { DataQuality } from "@/components/curation/data-quality";
+import { ReportParser } from "@/components/curation/report-parser";
 
 const tabs = [
   { id: "sources", label: "Data Sources" },
+  { id: "ai-parser", label: "AI Parser" },
   { id: "manual", label: "Manual Entry" },
   { id: "import", label: "Bulk Import" },
   { id: "quality", label: "Data Quality" },
@@ -50,6 +52,7 @@ export default function CurationPage() {
 
       {/* Tab content */}
       {activeTab === "sources" && <SourcesDashboard />}
+      {activeTab === "ai-parser" && <ReportParser />}
       {activeTab === "manual" && <ManualEntry />}
       {activeTab === "import" && <BulkImport />}
       {activeTab === "quality" && <DataQuality />}
